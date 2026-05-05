@@ -32,18 +32,19 @@ model, labels = clustering(X,n_clusters,linkage)
 
 df["Cluster"] = labels
 
-if (len (features) == 2 )& (df[features[0]].dtype != 'object') & (df[features[1]].dtype != 'object'):
+if (len(features) == 2) and (df[features[0]].dtype in ['int64', 'float64']) and (df[features[1]].dtype in ['int64', 'float64']):
     fig, ax = plt.subplots()
     ax.scatter(
         df[features[0]],
         df[features[1]],
-        c= df["Cluster"]
+        c=df["Cluster"],
+        cmap='viridis'
     )
     ax.set_xlabel(features[0])
     ax.set_ylabel(features[1])
     st.pyplot(fig)
 else:
-    st.info("Select exactly 2 feautures for visualization")
+    st.info("Select exactly 2 numerical features for visualization")
 
 st.subheader("Clustered Data")
 st.dataframe(df)
